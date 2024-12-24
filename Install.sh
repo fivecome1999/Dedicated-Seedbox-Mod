@@ -137,6 +137,10 @@ while getopts "u:p:c:q:l:rbvx3oh" opt; do
 		unset bbrv3_install
 		bbrx_install=1	  
 		;;
+	z ) # process option bbr
+		unset bbrv3_install
+		bbrz_install=1	  
+		;;
 	3 ) # process option bbr
 		unset bbrx_install
 		bbrv3_install=1
@@ -366,6 +370,15 @@ if [[ ! -z "$bbrx_install" ]]; then
 	fi
 fi
 
+if [[ ! -z "$bbrz_install" ]]; then
+	# Check if Tweaked BBR is already installed
+	if [[ ! -z "$(lsmod | grep bbrz)" ]]; then
+		warn echo "Tweaked BBR is already installed"
+	else
+		install_ install_bbrz_ "Installing BBRz" "/tmp/bbrz_error" bbrz_install_success
+	fi
+fi
+
 # BBRv3
 if [[ ! -z "$bbrv3_install" ]]; then
 	install_ install_bbrv3_ "Installing BBRv3" "/tmp/bbrv3_error" bbrv3_install_success
@@ -450,6 +463,10 @@ fi
 # BBR
 if [[ ! -z "$bbrx_install_success" ]]; then
 	info "BBRx successfully installed, please reboot for it to take effect"
+fi
+
+if [[ ! -z "$bbrz_install_success" ]]; then
+	info "BBRz successfully installed, please reboot for it to take effect"
 fi
 
 if [[ ! -z "$bbrv3_install_success" ]]; then
