@@ -88,7 +88,7 @@ if [[ "$OS" =~ "Ubuntu" ]]; then #Ubuntu 20.04+ are supported
 fi
 
 ## Read input arguments
-while getopts "u:p:c:q:l:rbvxz3oh" opt; do
+while getopts "u:p:c:q:l:rbvxyz3oh" opt; do
   case ${opt} in
 	u ) # process option username
 		username=${OPTARG}
@@ -136,6 +136,10 @@ while getopts "u:p:c:q:l:rbvxz3oh" opt; do
 	x ) # process option bbr
 		unset bbrv3_install
 		bbrx_install=1	  
+		;;
+	y ) # process option bbr
+		unset bbrv3_install
+		bbry_install=1	  
 		;;
 	z ) # process option bbr
 		unset bbrv3_install
@@ -370,6 +374,15 @@ if [[ ! -z "$bbrx_install" ]]; then
 	fi
 fi
 
+if [[ ! -z "$bbry_install" ]]; then
+	# Check if Tweaked BBR is already installed
+	if [[ ! -z "$(lsmod | grep bbry)" ]]; then
+		warn echo "Tweaked BBR is already installed"
+	else
+		install_ install_bbry_ "Installing BBRy" "/tmp/bbry_error" bbry_install_success
+	fi
+fi
+
 if [[ ! -z "$bbrz_install" ]]; then
 	# Check if Tweaked BBR is already installed
 	if [[ ! -z "$(lsmod | grep bbrz)" ]]; then
@@ -463,6 +476,10 @@ fi
 # BBR
 if [[ ! -z "$bbrx_install_success" ]]; then
 	info "BBRx successfully installed, please reboot for it to take effect"
+fi
+
+if [[ ! -z "$bbry_install_success" ]]; then
+	info "BBRy successfully installed, please reboot for it to take effect"
 fi
 
 if [[ ! -z "$bbrz_install_success" ]]; then
