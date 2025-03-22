@@ -362,7 +362,8 @@ fi
 install_ set_initial_congestion_window_ "Setting Initial Congestion Window" "/tmp/initial_congestion_window_error" initial_congestion_window_success
 install_ kernel_settings_ "Setting Kernel Settings" "/tmp/kernel_settings_error" kernel_settings_success
 
-
+info "Delay 10 seconds"
+sleep 10s
 
 # BBRx
 if [[ ! -z "$bbrx_install" ]]; then
