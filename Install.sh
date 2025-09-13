@@ -313,11 +313,11 @@ if [[ ! -z "$qb_install" ]]; then
 	fi
 	#Check if qBittorrent port is specified
 	if [ -z "$qb_port" ]; then
-		qb_port=8080
+		qb_port=9090
 	fi
 	#Check if qBittorrent incoming port is specified
 	if [ -z "$qb_incoming_port" ]; then
-		qb_incoming_port=45000
+		qb_incoming_port=36666
 	fi
 
 	## qBittorrent & libtorrent compatibility check
